@@ -69,7 +69,7 @@ Same functionality as Problem 5, but using an array for direct lookup instead of
 
 ## 🚀 Live Demo
 
-[View Live Demo](https://walaa86.github.io/cpp-learning-lab/)
+[View Live Demo](https://walaa86.github.io/cpp-algorithms-level8/)
 
 ## 💻 Technologies Used
 
