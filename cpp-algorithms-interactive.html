@@ -1,0 +1,2882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Algorithm Problems - Interactive Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-color: white;
+            box-shadow: 0 5px 20px rgba(255,255,255,0.3);
+        }
+
+        .problem-content {
+            display: none;
+        }
+
+        .problem-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.2em;
+        }
+
+        .converter-section {
+            grid-column: 1 / -1;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #333;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .logic-section {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .logic-section h3 {
+            color: #764ba2;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .logic-item {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            font-size: 0.95em;
+            transition: transform 0.2s ease;
+        }
+
+        .logic-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        .highlight {
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        .step-by-step {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f4f8;
+            border-radius: 10px;
+            border: 2px dashed #667eea;
+        }
+
+        .step-by-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .step {
+            padding: 12px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .example-btn {
+            padding: 10px;
+            background: #e0e7ff;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .example-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+
+        .tips-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .tips-box h4 {
+            color: #065f46;
+            margin-bottom: 8px;
+        }
+
+        .tips-box ul {
+            margin-left: 20px;
+            color: #047857;
+        }
+
+        .tips-box li {
+            margin: 5px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .code-reference {
+            margin-top: 20px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .code-reference-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .code-reference-header:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        .code-reference-header .toggle-icon {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .code-reference-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .code-reference-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f8f9fa;
+        }
+
+        .code-reference-content.active {
+            max-height: 2000px;
+        }
+
+        .code-reference-content pre {
+            margin: 0;
+            padding: 20px;
+            background: #2d3748;
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-reference-content pre .keyword {
+            color: #c792ea;
+        }
+
+        .code-reference-content pre .function {
+            color: #82aaff;
+        }
+
+        .code-reference-content pre .string {
+            color: #c3e88d;
+        }
+
+        .code-reference-content pre .comment {
+            color: #546e7a;
+            font-style: italic;
+        }
+
+        .code-reference-content pre .number {
+            color: #f78c6c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 C++ Algorithm Problems</h1>
+            <p>Interactive Learning Lab - Level 8</p>
+            
+            <div class="tabs">
+                <div class="tab active" onclick="switchProblem('problem1')">
+                    🔢 Problem 1: Number to Text
+                </div>
+                <div class="tab" onclick="switchProblem('problem2')">
+                    📅 Problem 2: Leap Year
+                </div>
+                <div class="tab" onclick="switchProblem('problem3')">
+                    ⚡ Problem 3: Leap Year (Optimized)
+                </div>
+                <div class="tab" onclick="switchProblem('problem4')">
+                    ⏰ Problem 4: Year Calculator
+                </div>
+                <div class="tab" onclick="switchProblem('problem5')">
+                    📆 Problem 5: Month Calculator
+                </div>
+                <div class="tab" onclick="switchProblem('problem6')">
+                    🚀 Problem 6: Month Calculator (Optimized)
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 1: Number to Text -->
+        <div id="problem1" class="problem-content active">
+            <div class="main-content">
+                <!-- Converter Section -->
+                <div class="card converter-section">
+                    <h2><span class="icon">🎯</span>Try It Yourself!</h2>
+                    
+                    <div class="input-group">
+                        <label for="numberInput">Enter a Number (0 - 2,147,483,647):</label>
+                        <input type="number" id="numberInput" placeholder="e.g., 546780834" min="0" max="2147483647">
+                    </div>
+
+                    <button class="btn" onclick="convertNumber()">Convert to Text</button>
+
+                    <div class="result" id="result">
+                        Your result will appear here...
+                    </div>
+
+                    <div class="examples">
+                        <div class="example-btn" onclick="tryExample(123)">123</div>
+                        <div class="example-btn" onclick="tryExample(1000)">1,000</div>
+                        <div class="example-btn" onclick="tryExample(54678)">54,678</div>
+                        <div class="example-btn" onclick="tryExample(1000000)">1,000,000</div>
+                        <div class="example-btn" onclick="tryExample(546780834)">546,780,834</div>
+                    </div>
+
+                    <div class="step-by-step" id="stepByStep">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">📝 Step-by-Step Breakdown:</h3>
+                        <div id="steps"></div>
+                    </div>
+                </div>
+
+                <!-- How It Works -->
+                <div class="card">
+                    <h2><span class="icon">🧠</span>How It Works</h2>
+                    
+                    <div class="logic-section">
+                        <h3>The Logic Behind It:</h3>
+                        
+                        <div class="logic-item">
+                            <strong>1-19:</strong> Direct lookup from array
+                            <div class="code-block">if (Number <= 19) → arr[Number]</div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>20-99:</strong> Tens place + recursive call
+                            <div class="code-block">85 → "Eighty" + NumberToText(5)</div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>100-999:</strong> Hundreds + remaining
+                            <div class="code-block">345 → "Three Hundreds" + NumberToText(45)</div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>1000+:</strong> Break by scale (Thousands, Millions, Billions)
+                            <div class="code-block">54000 → "Fifty Four Thousands"</div>
+                        </div>
+                    </div>
+
+                    <div class="explanation">
+                        <strong>💡 Key Concept:</strong> The function calls itself (recursion) to handle smaller parts of the number. Each level handles a specific range!
+                    </div>
+                </div>
+
+                <!-- Recursion Explained -->
+                <div class="card">
+                    <h2><span class="icon">🔄</span>Recursion Magic</h2>
+                    
+                    <p style="margin-bottom: 15px; line-height: 1.6;">
+                        <strong>What is Recursion?</strong><br>
+                        A function that calls itself to solve smaller versions of the same problem!
+                    </p>
+
+                    <div class="logic-section">
+                        <h3>Example: Converting 345</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>NumberToText(345)</strong> → Number is 345
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            345 is between 200-999, so:<br>
+                            <code>NumberToText(345/100) + "Hundreds" + NumberToText(345%100)</code>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            Becomes: <code>NumberToText(3) + "Hundreds" + NumberToText(45)</code>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <strong>NumberToText(3)</strong> → Returns <span class="highlight">"Three"</span>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">5</span>
+                            <strong>NumberToText(45)</strong> → Returns <span class="highlight">"Forty Five"</span>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">6</span>
+                            Final Result: <span class="highlight">"Three Hundreds Forty Five"</span>
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>🎓 Learning Tips:</h4>
+                        <ul>
+                            <li>Each recursion handles ONE specific range</li>
+                            <li>The base case (return "") stops recursion</li>
+                            <li>Division (/) gets the major part</li>
+                            <li>Modulus (%) gets the remainder</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Common Patterns -->
+                <div class="card">
+                    <h2><span class="icon">📚</span>Number Ranges</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Range Breakdown:</h3>
+                        
+                        <div class="logic-item">
+                            <strong>0:</strong> Returns empty string (base case)
+                        </div>
+                        
+                        <div class="logic-item">
+                            <strong>1-19:</strong> One, Two, ... Nineteen
+                        </div>
+                        
+                        <div class="logic-item">
+                            <strong>20-99:</strong> Twenty, Thirty, ... Ninety
+                        </div>
+                        
+                        <div class="logic-item">
+                            <strong>100-999:</strong> One Hundred, Two Hundreds, etc.
+                        </div>
+                        
+                        <div class="logic-item">
+                            <strong>1,000-999,999:</strong> Thousands
+                        </div>
+                        
+                        <div class="logic-item">
+                            <strong>1,000,000-999,999,999:</strong> Millions
+                        </div>
+                        
+                        <div class="logic-item">
+                            <strong>1,000,000,000+:</strong> Billions
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Original Code Reference -->
+                <div class="card">
+                    <h2><span class="icon">💻</span>Original C++ Code</h2>
+                    
+                    <div class="code-reference">
+                        <div class="code-reference-header" onclick="toggleCode('code1')">
+                            <span>📝 Click to View/Hide Full Code</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="code-reference-content" id="code1">
+                            <pre><span class="comment">// Problem #1: Number To Text</span>
+<span class="keyword">#include</span> &lt;iostream&gt;
+<span class="keyword">#include</span> &lt;string&gt;
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">string</span> <span class="function">NumberToText</span>(<span class="keyword">int</span> Number)
+{
+    <span class="keyword">if</span>(Number == <span class="number">0</span>)
+    {
+        <span class="keyword">return</span> <span class="string">""</span>;
+    }
+
+    <span class="keyword">if</span> (Number &gt;= <span class="number">1</span> && Number &lt;= <span class="number">19</span>)
+    {
+        <span class="keyword">string</span> arr[] = {<span class="string">""</span>, <span class="string">"One"</span>, <span class="string">"Two"</span>, <span class="string">"Three"</span>, <span class="string">"Four"</span>, <span class="string">"Five"</span>, 
+                        <span class="string">"Six"</span>, <span class="string">"Seven"</span>, <span class="string">"Eight"</span>, <span class="string">"Nine"</span>, <span class="string">"Ten"</span>, 
+                        <span class="string">"Eleven"</span>, <span class="string">"Twelve"</span>, <span class="string">"Thirteen"</span>, <span class="string">"Fourteen"</span>,
+                        <span class="string">"Fifteen"</span>, <span class="string">"Sixteen"</span>, <span class="string">"Seventeen"</span>, <span class="string">"Eighteen"</span>, 
+                        <span class="string">"Nineteen"</span>};
+        <span class="keyword">return</span> arr[Number] + <span class="string">" "</span>;
+    }
+    
+    <span class="keyword">if</span> (Number &gt;= <span class="number">20</span> && Number &lt;= <span class="number">99</span>)
+    {
+        <span class="keyword">string</span> arr[] = {<span class="string">""</span>, <span class="string">""</span>, <span class="string">"Twenty"</span>, <span class="string">"Thirty"</span>, <span class="string">"Forty"</span>, <span class="string">"Fifty"</span>, 
+                        <span class="string">"Sixty"</span>, <span class="string">"Seventy"</span>, <span class="string">"Eighty"</span>, <span class="string">"Ninety"</span>};
+        <span class="keyword">return</span> arr[Number/<span class="number">10</span>] + <span class="string">" "</span> + <span class="function">NumberToText</span>(Number % <span class="number">10</span>);
+    }
+    
+    <span class="keyword">if</span> (Number &gt;= <span class="number">100</span> && Number &lt;= <span class="number">199</span>)
+    {
+        <span class="keyword">return</span> <span class="string">"One Hundred "</span> + <span class="function">NumberToText</span>(Number % <span class="number">100</span>);
+    }
+    
+    <span class="keyword">if</span> (Number &gt;= <span class="number">200</span> && Number &lt;= <span class="number">999</span>)
+    {
+        <span class="keyword">return</span> <span class="function">NumberToText</span>(Number/<span class="number">100</span>) + <span class="string">"Hundreds "</span> + <span class="function">NumberToText</span>(Number % <span class="number">100</span>);
+    }
+    
+    <span class="keyword">if</span> (Number &gt;= <span class="number">1000</span> && Number &lt;= <span class="number">1999</span>)
+    {
+        <span class="keyword">return</span> <span class="string">"One Thousand "</span> + <span class="function">NumberToText</span>(Number % <span class="number">1000</span>);
+    }
+    
+    <span class="keyword">if</span> (Number &gt;= <span class="number">2000</span> && Number &lt;= <span class="number">999999</span>)
+    {
+        <span class="keyword">return</span> <span class="function">NumberToText</span>(Number/<span class="number">1000</span>) + <span class="string">"Thousands "</span> + <span class="function">NumberToText</span>(Number % <span class="number">1000</span>);
+    }
+    
+    <span class="keyword">if</span> (Number &gt;= <span class="number">1000000</span> && Number &lt;= <span class="number">1999999</span>)
+    {
+        <span class="keyword">return</span> <span class="string">"One Million "</span> + <span class="function">NumberToText</span>(Number % <span class="number">1000000</span>);
+    }
+    
+    <span class="keyword">if</span> (Number &gt;= <span class="number">2000000</span> && Number &lt;= <span class="number">999999999</span>)
+    {
+        <span class="keyword">return</span> <span class="function">NumberToText</span>(Number/<span class="number">1000000</span>) + <span class="string">"Millions "</span> + <span class="function">NumberToText</span>(Number% <span class="number">1000000</span>);
+    }
+
+    <span class="keyword">if</span> (Number &gt;= <span class="number">1000000000</span> && Number &lt;= <span class="number">1999999999</span>)
+    {
+        <span class="keyword">return</span> <span class="string">"One Billion "</span> + <span class="function">NumberToText</span>(Number % <span class="number">1000000000</span>);
+    }
+    <span class="keyword">else</span>
+    {
+        <span class="keyword">return</span> <span class="function">NumberToText</span>(Number/<span class="number">1000000000</span>) + <span class="string">"Billions "</span> + <span class="function">NumberToText</span>(Number % <span class="number">1000000000</span>);
+    }
+}
+
+<span class="keyword">int</span> <span class="function">ReadNumber</span>()
+{
+    <span class="keyword">int</span> Num = <span class="number">0</span>;
+    cout &lt;&lt; <span class="string">"\nPlease enter Number ? "</span>;
+    cin &gt;&gt; Num;
+    <span class="keyword">return</span> Num;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">int</span> Number = <span class="function">ReadNumber</span>();
+    cout &lt;&lt; <span class="function">NumberToText</span>(Number);
+    
+    cin.ignore();
+    cin.get();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 2: Leap Year -->
+        <div id="problem2" class="problem-content">
+            <div class="main-content">
+                <!-- Leap Year Checker Section -->
+                <div class="card converter-section">
+                    <h2><span class="icon">📅</span>Check if Year is Leap Year</h2>
+                    
+                    <div class="input-group">
+                        <label for="yearInput">Enter a Year (e.g., 1900, 2000, 2024):</label>
+                        <input type="number" id="yearInput" placeholder="e.g., 2024" min="1" max="9999">
+                    </div>
+
+                    <button class="btn" onclick="checkLeapYear()">Check Leap Year</button>
+
+                    <div class="result" id="leapResult">
+                        Your result will appear here...
+                    </div>
+
+                    <div class="examples">
+                        <div class="example-btn" onclick="tryYearExample(1900)">1900</div>
+                        <div class="example-btn" onclick="tryYearExample(2000)">2000</div>
+                        <div class="example-btn" onclick="tryYearExample(2024)">2024</div>
+                        <div class="example-btn" onclick="tryYearExample(2100)">2100</div>
+                        <div class="example-btn" onclick="tryYearExample(2400)">2400</div>
+                    </div>
+
+                    <div class="step-by-step" id="leapSteps">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">🔍 How We Checked:</h3>
+                        <div id="leapStepsContent"></div>
+                    </div>
+                </div>
+
+                <!-- Leap Year Logic -->
+                <div class="card">
+                    <h2><span class="icon">🧠</span>Leap Year Rules</h2>
+                    
+                    <div class="logic-section">
+                        <h3>The 4 Rules to Check:</h3>
+                        
+                        <div class="logic-item">
+                            <strong>Rule 1:</strong> Divisible by 400? → <span class="highlight">LEAP YEAR ✅</span>
+                            <div class="code-block">if (Year % 400 == 0) return true;</div>
+                            <small style="color: #666;">Examples: 1600, 2000, 2400</small>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>Rule 2:</strong> Divisible by 100? → <span class="highlight">NOT LEAP ❌</span>
+                            <div class="code-block">else if (Year % 100 == 0) return false;</div>
+                            <small style="color: #666;">Examples: 1700, 1800, 1900, 2100</small>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>Rule 3:</strong> Divisible by 4? → <span class="highlight">LEAP YEAR ✅</span>
+                            <div class="code-block">else if (Year % 4 == 0) return true;</div>
+                            <small style="color: #666;">Examples: 2004, 2008, 2012, 2016, 2020, 2024</small>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>Rule 4:</strong> All other years → <span class="highlight">NOT LEAP ❌</span>
+                            <div class="code-block">else return false;</div>
+                            <small style="color: #666;">Examples: 2001, 2002, 2003, 2005</small>
+                        </div>
+                    </div>
+
+                    <div class="explanation">
+                        <strong>💡 Important:</strong> The order matters! Always check 400 first, then 100, then 4. This is because 400 is divisible by both 100 and 4, so we need to catch it first!
+                    </div>
+                </div>
+
+                <!-- Why These Rules? -->
+                <div class="card">
+                    <h2><span class="icon">🌍</span>Why Leap Years?</h2>
+                    
+                    <p style="margin-bottom: 15px; line-height: 1.6;">
+                        <strong>The Earth Problem:</strong><br>
+                        Earth takes approximately <strong>365.25 days</strong> to orbit the sun, not exactly 365 days!
+                    </p>
+
+                    <div class="logic-section">
+                        <h3>The Solution:</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            Add 1 extra day every 4 years (0.25 × 4 = 1 day)
+                            <div class="code-block">→ This is why we have leap years!</div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            But that's too much! (365.25 is not exact)
+                            <div class="code-block">→ Remove 3 days every 400 years</div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            How? Skip leap years on century years (100, 200, 300...)
+                            <div class="code-block">→ Except every 400 years!</div>
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>🎯 Quick Memory Trick:</h4>
+                        <ul>
+                            <li><strong>400?</strong> Always leap! ✅</li>
+                            <li><strong>100?</strong> Never leap! ❌</li>
+                            <li><strong>4?</strong> Usually leap! ✅</li>
+                            <li><strong>Other?</strong> Not leap! ❌</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Examples Table -->
+                <div class="card">
+                    <h2><span class="icon">📊</span>Real Examples</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Test Your Understanding:</h3>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th style="text-align: center;">÷400?</th>
+                                    <th style="text-align: center;">÷100?</th>
+                                    <th style="text-align: center;">÷4?</th>
+                                    <th style="text-align: center;">Leap?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>2000</strong></td>
+                                    <td style="text-align: center;">✅ Yes</td>
+                                    <td style="text-align: center;">-</td>
+                                    <td style="text-align: center;">-</td>
+                                    <td style="text-align: center; background: #d1fae5; font-weight: 600;">✅ YES</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>1900</strong></td>
+                                    <td style="text-align: center;">❌ No</td>
+                                    <td style="text-align: center;">✅ Yes</td>
+                                    <td style="text-align: center;">-</td>
+                                    <td style="text-align: center; background: #fee2e2; font-weight: 600;">❌ NO</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2024</strong></td>
+                                    <td style="text-align: center;">❌ No</td>
+                                    <td style="text-align: center;">❌ No</td>
+                                    <td style="text-align: center;">✅ Yes</td>
+                                    <td style="text-align: center; background: #d1fae5; font-weight: 600;">✅ YES</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2023</strong></td>
+                                    <td style="text-align: center;">❌ No</td>
+                                    <td style="text-align: center;">❌ No</td>
+                                    <td style="text-align: center;">❌ No</td>
+                                    <td style="text-align: center; background: #fee2e2; font-weight: 600;">❌ NO</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2100</strong></td>
+                                    <td style="text-align: center;">❌ No</td>
+                                    <td style="text-align: center;">✅ Yes</td>
+                                    <td style="text-align: center;">-</td>
+                                    <td style="text-align: center; background: #fee2e2; font-weight: 600;">❌ NO</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Original Code Reference -->
+                <div class="card">
+                    <h2><span class="icon">💻</span>Original C++ Code</h2>
+                    
+                    <div class="code-reference">
+                        <div class="code-reference-header" onclick="toggleCode('code2')">
+                            <span>📝 Click to View/Hide Full Code</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="code-reference-content" id="code2">
+                            <pre><span class="comment">// Problem #2: Leap Year</span>
+<span class="keyword">#include</span> &lt;iostream&gt;
+<span class="keyword">#include</span> &lt;string&gt;
+<span class="keyword">using namespace</span> std;
+
+<span class="keyword">bool</span> <span class="function">IsLeapYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="comment">// leap year if perfectly divisible by 400</span>
+    <span class="keyword">if</span> (Year % <span class="number">400</span> == <span class="number">0</span>)
+    {
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+    <span class="comment">// not a leap year if divisible by 100</span>
+    <span class="comment">// but not divisible by 400</span>
+    <span class="keyword">else if</span> (Year % <span class="number">100</span> == <span class="number">0</span>)
+    {
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+    <span class="comment">// leap year if not divisible by 100</span>
+    <span class="comment">// but divisible by 4</span>
+    <span class="keyword">else if</span> (Year % <span class="number">4</span> == <span class="number">0</span>)
+    {
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+    <span class="comment">// all other years are not leap years</span>
+    <span class="keyword">else</span>
+    {
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+}
+
+<span class="keyword">short</span> <span class="function">ReadYear</span>()
+{
+    <span class="keyword">short</span> Year = <span class="number">0</span>;
+    cout &lt;&lt; <span class="string">"\nPlease enter a year to check? "</span>;
+    cin &gt;&gt; Year;
+    <span class="keyword">return</span> Year;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">short</span> Year = <span class="function">ReadYear</span>();
+    
+    <span class="keyword">if</span> (<span class="function">IsLeapYear</span>(Year))
+        cout &lt;&lt; <span class="string">"Yes, Year ["</span> &lt;&lt; Year &lt;&lt; <span class="string">"] is a leap year.\n"</span>;
+    <span class="keyword">else</span>
+        cout &lt;&lt; <span class="string">"No, Year ["</span> &lt;&lt; Year &lt;&lt; <span class="string">"] is NOT a leap year.\n"</span>;
+    
+    system(<span class="string">"pause&gt;0"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 3: Leap Year Optimized -->
+        <div id="problem3" class="problem-content">
+            <div class="main-content">
+                <!-- Comparison Section -->
+                <div class="card converter-section">
+                    <h2><span class="icon">⚡</span>One Line Solution - Optimized!</h2>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3 style="color: white; margin-bottom: 15px; text-align: center;">✨ From Multiple Lines to ONE LINE! ✨</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; backdrop-filter: blur(10px);">
+                                <h4 style="color: #fbbf24; margin-bottom: 10px;">❌ Before (Multiple if-else)</h4>
+                                <div style="background: #2d3748; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.85em; color: #e2e8f0;">
+if (Year % 400 == 0)
+    return true;
+else if (Year % 100 == 0)
+    return false;
+else if (Year % 4 == 0)
+    return true;
+else
+    return false;
+                                </div>
+                                <p style="color: white; margin-top: 10px; font-size: 0.9em;">📏 <strong>8 lines</strong> of code</p>
+                            </div>
+                            
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; backdrop-filter: blur(10px);">
+                                <h4 style="color: #10b981; margin-bottom: 10px;">✅ After (One Line)</h4>
+                                <div style="background: #2d3748; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.85em; color: #e2e8f0;">
+return (Year % 400 == 0) || 
+       (Year % 100 != 0 && 
+        Year % 4 == 0);
+                                </div>
+                                <p style="color: white; margin-top: 10px; font-size: 0.9em;">🚀 <strong>1 line</strong> only!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="yearInputOpt">Test the Optimized Version:</label>
+                        <input type="number" id="yearInputOpt" placeholder="e.g., 2024" min="1" max="9999">
+                    </div>
+
+                    <button class="btn" onclick="checkLeapYearOptimized()">Check with Optimized Code</button>
+
+                    <div class="result" id="leapResultOpt">
+                        Your result will appear here...
+                    </div>
+
+                    <div class="examples">
+                        <div class="example-btn" onclick="tryYearExampleOpt(1900)">1900</div>
+                        <div class="example-btn" onclick="tryYearExampleOpt(2000)">2000</div>
+                        <div class="example-btn" onclick="tryYearExampleOpt(2024)">2024</div>
+                        <div class="example-btn" onclick="tryYearExampleOpt(2100)">2100</div>
+                        <div class="example-btn" onclick="tryYearExampleOpt(2400)">2400</div>
+                    </div>
+
+                    <div class="step-by-step" id="leapStepsOpt">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">🔍 Logic Breakdown:</h3>
+                        <div id="leapStepsContentOpt"></div>
+                    </div>
+                </div>
+
+                <!-- How We Got There -->
+                <div class="card">
+                    <h2><span class="icon">🧠</span>How We Got the One Line</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Step-by-Step Optimization:</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>Identify when Year is Leap:</strong>
+                            <div style="margin-top: 8px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
+                                • Divisible by 400 → LEAP ✅<br>
+                                • Divisible by 4 BUT NOT by 100 → LEAP ✅
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>Write First Condition:</strong>
+                            <div class="code-block" style="margin-top: 8px;">Year % 400 == 0</div>
+                            <small style="color: #666;">This catches: 1600, 2000, 2400...</small>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>Write Second Condition:</strong>
+                            <div class="code-block" style="margin-top: 8px;">Year % 100 != 0 && Year % 4 == 0</div>
+                            <small style="color: #666;">This catches: 2004, 2008, 2024... (but NOT 1900, 2100)</small>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <strong>Combine with OR:</strong>
+                            <div class="code-block" style="margin-top: 8px;">return (Year % 400 == 0) || (Year % 100 != 0 && Year % 4 == 0);</div>
+                            <div style="margin-top: 10px; padding: 12px; background: #d1fae5; border-radius: 5px; border-left: 4px solid #10b981;">
+                                <strong style="color: #065f46;">💡 Key Insight:</strong> We use <code>||</code> (OR) because if EITHER condition is true, it's a leap year!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logical Operators Explained -->
+                <div class="card">
+                    <h2><span class="icon">🔧</span>Logical Operators</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Understanding && and ||:</h3>
+                        
+                        <div class="logic-item">
+                            <strong>AND (&&) - Both Must Be True:</strong>
+                            <div class="code-block">A && B → true only if A is true AND B is true</div>
+                            <div style="margin-top: 8px; font-size: 0.9em;">
+                                <strong>Example:</strong> <code>Year % 100 != 0 && Year % 4 == 0</code><br>
+                                Year 2024: NOT divisible by 100 ✅ AND divisible by 4 ✅ → <span class="highlight">TRUE</span><br>
+                                Year 1900: Divisible by 100 ❌ → <span style="color: #ef4444;">FALSE</span> (doesn't matter if divisible by 4)
+                            </div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>OR (||) - At Least One Must Be True:</strong>
+                            <div class="code-block">A || B → true if A is true OR B is true (or both)</div>
+                            <div style="margin-top: 8px; font-size: 0.9em;">
+                                <strong>Example:</strong> <code>(Year % 400 == 0) || (Year % 100 != 0 && Year % 4 == 0)</code><br>
+                                Year 2000: Divisible by 400 ✅ → <span class="highlight">TRUE</span> (doesn't check second condition)<br>
+                                Year 2024: First condition ❌ but second condition ✅ → <span class="highlight">TRUE</span>
+                            </div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>NOT (!) - Flips the Value:</strong>
+                            <div class="code-block">!A → true if A is false, false if A is true</div>
+                            <div style="margin-top: 8px; font-size: 0.9em;">
+                                <strong>Note:</strong> We used <code>!=</code> instead of <code>!</code> for "not equal"
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>🎯 Operator Precedence:</h4>
+                        <ul>
+                            <li><strong>&&</strong> has higher precedence than <strong>||</strong></li>
+                            <li>So: <code>A || B && C</code> is read as <code>A || (B && C)</code></li>
+                            <li>But it's <strong>better to use parentheses</strong> for clarity!</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Practice Exercise -->
+                <div class="card">
+                    <h2><span class="icon">💪</span>Practice: Build Your Own!</h2>
+                    
+                    <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">Challenge Yourself:</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>Try to write it without looking:</strong>
+                            <div style="margin-top: 10px;">
+                                <code>return ( _______ ) || ( _______ && _______ );</code>
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>Think about these years:</strong>
+                            <table style="width: 100%; margin-top: 10px; font-size: 0.9em;">
+                                <tr>
+                                    <td><strong>2000:</strong></td>
+                                    <td>First condition true? _____</td>
+                                    <td>Result? _____</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>1900:</strong></td>
+                                    <td>Second condition true? _____</td>
+                                    <td>Result? _____</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2024:</strong></td>
+                                    <td>Which condition works? _____</td>
+                                    <td>Result? _____</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>Test your understanding:</strong>
+                            <div style="margin-top: 10px; font-size: 0.9em;">
+                                Why do we need <code>Year % 100 != 0</code> in the second condition?<br>
+                                <em style="color: #666;">Hint: What happens with year 2100 without this check?</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Original Code Reference -->
+                <div class="card">
+                    <h2><span class="icon">💻</span>Optimized C++ Code</h2>
+                    
+                    <div class="code-reference">
+                        <div class="code-reference-header" onclick="toggleCode('code3')">
+                            <span>📝 Click to View/Hide Optimized Code</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="code-reference-content" id="code3">
+                            <pre><span class="comment">// Problem #3: Leap Year (Optimized - One Line)</span>
+<span class="keyword">#include</span> &lt;iostream&gt;
+<span class="keyword">#include</span> &lt;string&gt;
+<span class="keyword">using namespace</span> std;
+
+<span class="comment">// ⚡ Optimized Version - Using Logical Operators</span>
+<span class="keyword">bool</span> <span class="function">IsLeapYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> (Year % <span class="number">400</span> == <span class="number">0</span>) || (Year % <span class="number">100</span> != <span class="number">0</span> && Year % <span class="number">4</span> == <span class="number">0</span>);
+}
+
+<span class="comment">// Alternative (without extra parentheses - still works):</span>
+<span class="comment">// return Year % 400 == 0 || Year % 100 != 0 && Year % 4 == 0;</span>
+
+<span class="keyword">short</span> <span class="function">ReadYear</span>()
+{
+    <span class="keyword">short</span> Year = <span class="number">0</span>;
+    cout &lt;&lt; <span class="string">"\nPlease enter a year to check? "</span>;
+    cin &gt;&gt; Year;
+    <span class="keyword">return</span> Year;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">short</span> Year = <span class="function">ReadYear</span>();
+    
+    <span class="keyword">if</span> (<span class="function">IsLeapYear</span>(Year))
+        cout &lt;&lt; <span class="string">"Yes, Year ["</span> &lt;&lt; Year &lt;&lt; <span class="string">"] is a leap year.\n"</span>;
+    <span class="keyword">else</span>
+        cout &lt;&lt; <span class="string">"No, Year ["</span> &lt;&lt; Year &lt;&lt; <span class="string">"] is NOT a leap year.\n"</span>;
+    
+    system(<span class="string">"pause&gt;0"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="comment">/*
+ * 📊 Comparison:
+ * 
+ * Old Way:  8 lines with multiple if-else
+ * New Way:  1 line with logical operators
+ * 
+ * Benefits:
+ * ✅ Shorter code
+ * ✅ Faster execution (less branching)
+ * ✅ More elegant and professional
+ * ✅ Easier to understand once you know the logic
+ */</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="explanation" style="margin-top: 15px;">
+                        <strong>🎓 Learning Note:</strong> This is called "code optimization" - writing the same logic in a more efficient way. The one-line version is not only shorter but also faster because it has fewer branches for the CPU to process!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 4: Year Calculator -->
+        <div id="problem4" class="problem-content">
+            <div class="main-content">
+                <!-- Calculator Section -->
+                <div class="card converter-section">
+                    <h2><span class="icon">⏰</span>Days, Hours, Minutes, Seconds in a Year</h2>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3 style="color: white; margin-bottom: 15px; text-align: center;">📊 Year Calculator</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(10px);">
+                                <div style="font-size: 2em; margin-bottom: 5px;">📅</div>
+                                <div style="color: white; font-weight: 600;">Days</div>
+                                <div id="daysDisplay" style="color: #fbbf24; font-size: 1.5em; font-weight: 700;">---</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(10px);">
+                                <div style="font-size: 2em; margin-bottom: 5px;">⏰</div>
+                                <div style="color: white; font-weight: 600;">Hours</div>
+                                <div id="hoursDisplay" style="color: #10b981; font-size: 1.5em; font-weight: 700;">---</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(10px);">
+                                <div style="font-size: 2em; margin-bottom: 5px;">⏱️</div>
+                                <div style="color: white; font-weight: 600;">Minutes</div>
+                                <div id="minutesDisplay" style="color: #f59e0b; font-size: 1.5em; font-weight: 700;">---</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(10px);">
+                                <div style="font-size: 2em; margin-bottom: 5px;">⚡</div>
+                                <div style="color: white; font-weight: 600;">Seconds</div>
+                                <div id="secondsDisplay" style="color: #ef4444; font-size: 1.5em; font-weight: 700;">---</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="yearInputCalc">Enter a Year:</label>
+                        <input type="number" id="yearInputCalc" placeholder="e.g., 2024" min="1" max="9999">
+                    </div>
+
+                    <button class="btn" onclick="calculateYear()">Calculate Time Units</button>
+
+                    <div class="examples">
+                        <div class="example-btn" onclick="tryYearCalc(1900)">1900 (NOT Leap)</div>
+                        <div class="example-btn" onclick="tryYearCalc(2000)">2000 (Leap)</div>
+                        <div class="example-btn" onclick="tryYearCalc(2024)">2024 (Leap)</div>
+                        <div class="example-btn" onclick="tryYearCalc(2023)">2023 (NOT Leap)</div>
+                    </div>
+
+                    <div class="step-by-step" id="calcSteps">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">🔢 Calculation Steps:</h3>
+                        <div id="calcStepsContent"></div>
+                    </div>
+                </div>
+
+                <!-- How It Works -->
+                <div class="card">
+                    <h2><span class="icon">🧠</span>The Logic</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Function Chain:</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>Check if Leap Year:</strong>
+                            <div class="code-block" style="margin-top: 8px;">bool IsLeapYear(short Year)</div>
+                            <small style="color: #666;">Returns true or false</small>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>Calculate Days:</strong>
+                            <div class="code-block" style="margin-top: 8px;">return IsLeapYear(Year) ? 366 : 365;</div>
+                            <small style="color: #666;">If leap → 366 days, else → 365 days</small>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>Calculate Hours:</strong>
+                            <div class="code-block" style="margin-top: 8px;">return NumberOfDaysInAYear(Year) * 24;</div>
+                            <small style="color: #666;">Days × 24 hours</small>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <strong>Calculate Minutes:</strong>
+                            <div class="code-block" style="margin-top: 8px;">return NumberOfHoursInAYear(Year) * 60;</div>
+                            <small style="color: #666;">Hours × 60 minutes</small>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">5</span>
+                            <strong>Calculate Seconds:</strong>
+                            <div class="code-block" style="margin-top: 8px;">return NumberOfMinutesInAYear(Year) * 60;</div>
+                            <small style="color: #666;">Minutes × 60 seconds</small>
+                        </div>
+                    </div>
+
+                    <div class="explanation">
+                        <strong>💡 Key Pattern:</strong> Each function calls the previous one! This is called <strong>function composition</strong> - building complex calculations from simpler ones.
+                    </div>
+                </div>
+
+                <!-- Data Types Explanation -->
+                <div class="card">
+                    <h2><span class="icon">🔢</span>Why Different Data Types?</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Understanding short vs int:</h3>
+                        
+                        <div class="logic-item">
+                            <strong>short (2 bytes) - Range: -32,768 to 32,767</strong>
+                            <div style="margin-top: 8px; font-size: 0.9em;">
+                                ✅ Used for: <strong>Days</strong> and <strong>Hours</strong><br>
+                                • Days in year: 365 or 366 ✅<br>
+                                • Hours in year: 8,760 or 8,784 ✅<br>
+                                <span style="color: #10b981;">Both fit easily in short!</span>
+                            </div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>int (4 bytes) - Range: -2,147,483,648 to 2,147,483,647</strong>
+                            <div style="margin-top: 8px; font-size: 0.9em;">
+                                ✅ Used for: <strong>Minutes</strong> and <strong>Seconds</strong><br>
+                                • Minutes in year: ~525,600 or ~527,040 ⚠️ Too big for short!<br>
+                                • Seconds in year: ~31,536,000 or ~31,622,400 ⚠️ WAY too big for short!<br>
+                                <span style="color: #ef4444;">Must use int!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>🎓 Programming Best Practice:</h4>
+                        <ul>
+                            <li>Use the <strong>smallest data type</strong> that fits your data</li>
+                            <li>Saves memory when dealing with large arrays</li>
+                            <li>But don't go too small - causes overflow errors!</li>
+                            <li>When in doubt, use <code>int</code> for safety</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ternary Operator -->
+                <div class="card">
+                    <h2><span class="icon">❓</span>Ternary Operator (?:)</h2>
+                    
+                    <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">Short-Hand if-else</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>The Ternary Operator:</strong>
+                            <div class="code-block" style="margin-top: 8px;">condition ? valueIfTrue : valueIfFalse;</div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>Example from our code:</strong>
+                            <div class="code-block" style="margin-top: 8px;">return IsLeapYear(Year) ? 366 : 365;</div>
+                            <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px;">
+                                <strong>Reads as:</strong> "If IsLeapYear is true, return 366, otherwise return 365"
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>Same thing with regular if-else:</strong>
+                            <div class="code-block" style="margin-top: 8px;">if (IsLeapYear(Year))
+    return 366;
+else
+    return 365;</div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; padding: 12px; background: #d1fae5; border-radius: 5px; border-left: 4px solid #10b981;">
+                            <strong style="color: #065f46;">✨ Advantage:</strong> More concise! One line instead of 4!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Table -->
+                <div class="card">
+                    <h2><span class="icon">📊</span>Leap vs Normal Year</h2>
+                    
+                    <div class="logic-section">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Time Unit</th>
+                                    <th style="text-align: center;">Normal Year (365 days)</th>
+                                    <th style="text-align: center;">Leap Year (366 days)</th>
+                                    <th style="text-align: center;">Difference</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Days</strong></td>
+                                    <td style="text-align: center;">365</td>
+                                    <td style="text-align: center; background: #d1fae5;">366</td>
+                                    <td style="text-align: center; color: #10b981; font-weight: 600;">+1</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hours</strong></td>
+                                    <td style="text-align: center;">8,760</td>
+                                    <td style="text-align: center; background: #d1fae5;">8,784</td>
+                                    <td style="text-align: center; color: #10b981; font-weight: 600;">+24</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Minutes</strong></td>
+                                    <td style="text-align: center;">525,600</td>
+                                    <td style="text-align: center; background: #d1fae5;">527,040</td>
+                                    <td style="text-align: center; color: #10b981; font-weight: 600;">+1,440</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Seconds</strong></td>
+                                    <td style="text-align: center;">31,536,000</td>
+                                    <td style="text-align: center; background: #d1fae5;">31,622,400</td>
+                                    <td style="text-align: center; color: #10b981; font-weight: 600;">+86,400</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="explanation" style="margin-top: 15px;">
+                        <strong>🎯 Fun Fact:</strong> A leap year gives you an extra 86,400 seconds! That's a full extra day to accomplish your goals! ⏰
+                    </div>
+                </div>
+
+                <!-- Original Code Reference -->
+                <div class="card">
+                    <h2><span class="icon">💻</span>Complete C++ Code</h2>
+                    
+                    <div class="code-reference">
+                        <div class="code-reference-header" onclick="toggleCode('code4')">
+                            <span>📝 Click to View/Hide Full Code</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="code-reference-content" id="code4">
+                            <pre><span class="comment">// Problem #4: Year Calculator</span>
+<span class="keyword">#include</span> &lt;iostream&gt;
+<span class="keyword">#include</span> &lt;string&gt;
+<span class="keyword">using namespace</span> std;
+
+<span class="comment">// Check if leap year (optimized version)</span>
+<span class="keyword">bool</span> <span class="function">IsLeapYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> (Year % <span class="number">4</span> == <span class="number">0</span> && Year % <span class="number">100</span> != <span class="number">0</span>) || (Year % <span class="number">400</span> == <span class="number">0</span>);
+}
+
+<span class="comment">// Calculate number of days</span>
+<span class="keyword">short</span> <span class="function">NumberOfDaysInAYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">IsLeapYear</span>(Year) ? <span class="number">366</span> : <span class="number">365</span>;
+}
+
+<span class="comment">// Calculate number of hours</span>
+<span class="keyword">short</span> <span class="function">NumberOfHoursInAYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfDaysInAYear</span>(Year) * <span class="number">24</span>;
+}
+
+<span class="comment">// Calculate number of minutes (int because result > 32,767)</span>
+<span class="keyword">int</span> <span class="function">NumberOfMinutesInAYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfHoursInAYear</span>(Year) * <span class="number">60</span>;
+}
+
+<span class="comment">// Calculate number of seconds (int because result is huge!)</span>
+<span class="keyword">int</span> <span class="function">NumberOfSecondsInAYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfMinutesInAYear</span>(Year) * <span class="number">60</span>;
+}
+
+<span class="keyword">short</span> <span class="function">ReadYear</span>()
+{
+    <span class="keyword">short</span> Year = <span class="number">0</span>;
+    cout &lt;&lt; <span class="string">"\nPlease enter a year to check? "</span>;
+    cin &gt;&gt; Year;
+    <span class="keyword">return</span> Year;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">short</span> Year = <span class="function">ReadYear</span>();
+    
+    cout &lt;&lt; <span class="string">"\nNumber of Days in Year ["</span> &lt;&lt; Year &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfDaysInAYear</span>(Year);
+         
+    cout &lt;&lt; <span class="string">"\nNumber of Hours in Year ["</span> &lt;&lt; Year &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfHoursInAYear</span>(Year);
+         
+    cout &lt;&lt; <span class="string">"\nNumber of Minutes in Year ["</span> &lt;&lt; Year &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfMinutesInAYear</span>(Year);
+         
+    cout &lt;&lt; <span class="string">"\nNumber of Seconds in Year ["</span> &lt;&lt; Year &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfSecondsInAYear</span>(Year);
+    
+    system(<span class="string">"pause&gt;0"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 5: Month Calculator -->
+        <div id="problem5" class="problem-content">
+            <div class="main-content">
+                <!-- Calculator Section -->
+                <div class="card converter-section">
+                    <h2><span class="icon">📆</span>Days, Hours, Minutes, Seconds in a Month</h2>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3 style="color: white; margin-bottom: 15px; text-align: center;">📊 Month Calculator</h3>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(10px);">
+                                <div style="font-size: 2em; margin-bottom: 5px;">📅</div>
+                                <div style="color: white; font-weight: 600;">Days</div>
+                                <div id="monthDaysDisplay" style="color: #fbbf24; font-size: 1.5em; font-weight: 700;">---</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(10px);">
+                                <div style="font-size: 2em; margin-bottom: 5px;">⏰</div>
+                                <div style="color: white; font-weight: 600;">Hours</div>
+                                <div id="monthHoursDisplay" style="color: #10b981; font-size: 1.5em; font-weight: 700;">---</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(10px);">
+                                <div style="font-size: 2em; margin-bottom: 5px;">⏱️</div>
+                                <div style="color: white; font-weight: 600;">Minutes</div>
+                                <div id="monthMinutesDisplay" style="color: #f59e0b; font-size: 1.5em; font-weight: 700;">---</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center; backdrop-filter: blur(10px);">
+                                <div style="font-size: 2em; margin-bottom: 5px;">⚡</div>
+                                <div style="color: white; font-weight: 600;">Seconds</div>
+                                <div id="monthSecondsDisplay" style="color: #ef4444; font-size: 1.5em; font-weight: 700;">---</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="yearInputMonth">Enter a Year:</label>
+                        <input type="number" id="yearInputMonth" placeholder="e.g., 2024" min="1" max="9999">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="monthInput">Enter a Month (1-12):</label>
+                        <select id="monthInput" style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1.1em;">
+                            <option value="1">1 - January</option>
+                            <option value="2">2 - February</option>
+                            <option value="3">3 - March</option>
+                            <option value="4">4 - April</option>
+                            <option value="5">5 - May</option>
+                            <option value="6">6 - June</option>
+                            <option value="7">7 - July</option>
+                            <option value="8">8 - August</option>
+                            <option value="9">9 - September</option>
+                            <option value="10">10 - October</option>
+                            <option value="11">11 - November</option>
+                            <option value="12">12 - December</option>
+                        </select>
+                    </div>
+
+                    <button class="btn" onclick="calculateMonth()">Calculate Month Time Units</button>
+
+                    <div class="examples">
+                        <div class="example-btn" onclick="tryMonthCalc(2000, 2)">Feb 2000 (Leap)</div>
+                        <div class="example-btn" onclick="tryMonthCalc(1900, 2)">Feb 1900 (NOT Leap)</div>
+                        <div class="example-btn" onclick="tryMonthCalc(2024, 1)">Jan 2024</div>
+                        <div class="example-btn" onclick="tryMonthCalc(2024, 4)">Apr 2024</div>
+                    </div>
+
+                    <div class="step-by-step" id="monthCalcSteps">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">🔢 Calculation Steps:</h3>
+                        <div id="monthCalcStepsContent"></div>
+                    </div>
+                </div>
+
+                <!-- Month Days Logic -->
+                <div class="card">
+                    <h2><span class="icon">🧠</span>How Many Days in Each Month?</h2>
+                    
+                    <div class="logic-section">
+                        <h3>The Month Pattern:</h3>
+                        
+                        <div class="logic-item">
+                            <strong>31 Days (7 months):</strong>
+                            <div style="margin-top: 8px; font-size: 0.95em;">
+                                January (1), March (3), May (5), July (7), August (8), October (10), December (12)
+                            </div>
+                            <div class="code-block" style="margin-top: 8px;">if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || 
+    Month == 8 || Month == 10 || Month == 12)
+    return 31;</div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>30 Days (4 months):</strong>
+                            <div style="margin-top: 8px; font-size: 0.95em;">
+                                April (4), June (6), September (9), November (11)
+                            </div>
+                            <div class="code-block" style="margin-top: 8px;">if (Month == 4 || Month == 6 || Month == 9 || Month == 11)
+    return 30;</div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>28 or 29 Days (February only):</strong>
+                            <div style="margin-top: 8px; font-size: 0.95em;">
+                                February (2) - Depends on Leap Year!
+                            </div>
+                            <div class="code-block" style="margin-top: 8px;">if (Month == 2)
+    return IsLeapYear(Year) ? 29 : 28;</div>
+                        </div>
+                    </div>
+
+                    <div class="tips-box">
+                        <h4>🎯 Memory Trick - "30 Days Hath September":</h4>
+                        <ul>
+                            <li>30 days: <strong>April, June, September, November</strong></li>
+                            <li>All the rest have 31</li>
+                            <li>Except February alone (28 or 29)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Function Building -->
+                <div class="card">
+                    <h2><span class="icon">🔧</span>Building the Functions</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Step-by-Step Function Creation:</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>NumberOfDaysInAMonth()</strong>
+                            <div class="code-block" style="margin-top: 8px;">short NumberOfDaysInAMonth(short Month, short Year)
+{
+    if (Month == 2)
+        return IsLeapYear(Year) ? 29 : 28;
+    
+    if (Month == 4 || Month == 6 || Month == 9 || Month == 11)
+        return 30;
+    
+    return 31;  // Default for remaining months
+}</div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>NumberOfHoursInAMonth()</strong>
+                            <div class="code-block" style="margin-top: 8px;">short NumberOfHoursInAMonth(short Month, short Year)
+{
+    return NumberOfDaysInAMonth(Month, Year) * 24;
+}</div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>NumberOfMinutesInAMonth()</strong>
+                            <div class="code-block" style="margin-top: 8px;">int NumberOfMinutesInAMonth(short Month, short Year)
+{
+    return NumberOfHoursInAMonth(Month, Year) * 60;
+}</div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">4</span>
+                            <strong>NumberOfSecondsInAMonth()</strong>
+                            <div class="code-block" style="margin-top: 8px;">int NumberOfSecondsInAMonth(short Month, short Year)
+{
+    return NumberOfMinutesInAMonth(Month, Year) * 60;
+}</div>
+                        </div>
+                    </div>
+
+                    <div class="explanation">
+                        <strong>💡 Notice:</strong> Same pattern as Problem 4! Each function builds on the previous one. This is called <strong>modular programming</strong> - breaking complex problems into simple, reusable functions.
+                    </div>
+                </div>
+
+                <!-- February Special Case -->
+                <div class="card">
+                    <h2><span class="icon">❄️</span>February: The Special Month</h2>
+                    
+                    <div style="background: #f0f9ff; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">Why is February Special?</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">📅</span>
+                            <strong>February is the ONLY month that changes!</strong>
+                            <div style="margin-top: 10px; padding: 12px; background: white; border-radius: 8px;">
+                                • <strong>Normal Year:</strong> February has <span style="color: #667eea; font-weight: 700;">28 days</span><br>
+                                • <strong>Leap Year:</strong> February has <span style="color: #10b981; font-weight: 700;">29 days</span><br>
+                                • All other months stay the same every year!
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 15px; padding: 15px; background: #fef3c7; border-radius: 8px;">
+                            <strong>🎓 This is why we need the Year parameter!</strong><br>
+                            To calculate days in February, we MUST check if it's a leap year.
+                        </div>
+                    </div>
+
+                    <table style="margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th style="text-align: center;">Leap?</th>
+                                <th style="text-align: center;">Feb Days</th>
+                                <th style="text-align: center;">Feb Hours</th>
+                                <th style="text-align: center;">Feb Minutes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>2000</strong></td>
+                                <td style="text-align: center; color: #10b981;">✅ YES</td>
+                                <td style="text-align: center; background: #d1fae5; font-weight: 600;">29</td>
+                                <td style="text-align: center; background: #d1fae5;">696</td>
+                                <td style="text-align: center; background: #d1fae5;">41,760</td>
+                            </tr>
+                            <tr>
+                                <td><strong>1900</strong></td>
+                                <td style="text-align: center; color: #ef4444;">❌ NO</td>
+                                <td style="text-align: center; background: #fee2e2; font-weight: 600;">28</td>
+                                <td style="text-align: center; background: #fee2e2;">672</td>
+                                <td style="text-align: center; background: #fee2e2;">40,320</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2024</strong></td>
+                                <td style="text-align: center; color: #10b981;">✅ YES</td>
+                                <td style="text-align: center; background: #d1fae5; font-weight: 600;">29</td>
+                                <td style="text-align: center; background: #d1fae5;">696</td>
+                                <td style="text-align: center; background: #d1fae5;">41,760</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2023</strong></td>
+                                <td style="text-align: center; color: #ef4444;">❌ NO</td>
+                                <td style="text-align: center; background: #fee2e2; font-weight: 600;">28</td>
+                                <td style="text-align: center; background: #fee2e2;">672</td>
+                                <td style="text-align: center; background: #fee2e2;">40,320</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Complete Code -->
+                <div class="card">
+                    <h2><span class="icon">💻</span>Complete C++ Code</h2>
+                    
+                    <div class="code-reference">
+                        <div class="code-reference-header" onclick="toggleCode('code5')">
+                            <span>📝 Click to View/Hide Full Code</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="code-reference-content" id="code5">
+                            <pre><span class="comment">// Problem #5: Month Calculator</span>
+<span class="keyword">#include</span> &lt;iostream&gt;
+<span class="keyword">#include</span> &lt;string&gt;
+<span class="keyword">using namespace</span> std;
+
+<span class="comment">// Check if leap year</span>
+<span class="keyword">bool</span> <span class="function">IsLeapYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> (Year % <span class="number">4</span> == <span class="number">0</span> && Year % <span class="number">100</span> != <span class="number">0</span>) || (Year % <span class="number">400</span> == <span class="number">0</span>);
+}
+
+<span class="comment">// Calculate number of days in a specific month</span>
+<span class="keyword">short</span> <span class="function">NumberOfDaysInAMonth</span>(<span class="keyword">short</span> Month, <span class="keyword">short</span> Year)
+{
+    <span class="comment">// February - depends on leap year</span>
+    <span class="keyword">if</span> (Month == <span class="number">2</span>)
+    {
+        <span class="keyword">return</span> <span class="function">IsLeapYear</span>(Year) ? <span class="number">29</span> : <span class="number">28</span>;
+    }
+    
+    <span class="comment">// April, June, September, November have 30 days</span>
+    <span class="keyword">if</span> (Month == <span class="number">4</span> || Month == <span class="number">6</span> || Month == <span class="number">9</span> || Month == <span class="number">11</span>)
+    {
+        <span class="keyword">return</span> <span class="number">30</span>;
+    }
+    
+    <span class="comment">// All other months have 31 days</span>
+    <span class="keyword">return</span> <span class="number">31</span>;
+}
+
+<span class="comment">// Calculate number of hours in a month</span>
+<span class="keyword">short</span> <span class="function">NumberOfHoursInAMonth</span>(<span class="keyword">short</span> Month, <span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfDaysInAMonth</span>(Month, Year) * <span class="number">24</span>;
+}
+
+<span class="comment">// Calculate number of minutes in a month</span>
+<span class="keyword">int</span> <span class="function">NumberOfMinutesInAMonth</span>(<span class="keyword">short</span> Month, <span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfHoursInAMonth</span>(Month, Year) * <span class="number">60</span>;
+}
+
+<span class="comment">// Calculate number of seconds in a month</span>
+<span class="keyword">int</span> <span class="function">NumberOfSecondsInAMonth</span>(<span class="keyword">short</span> Month, <span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfMinutesInAMonth</span>(Month, Year) * <span class="number">60</span>;
+}
+
+<span class="keyword">short</span> <span class="function">ReadYear</span>()
+{
+    <span class="keyword">short</span> Year = <span class="number">0</span>;
+    cout &lt;&lt; <span class="string">"\nPlease enter a year? "</span>;
+    cin &gt;&gt; Year;
+    <span class="keyword">return</span> Year;
+}
+
+<span class="keyword">short</span> <span class="function">ReadMonth</span>()
+{
+    <span class="keyword">short</span> Month = <span class="number">0</span>;
+    cout &lt;&lt; <span class="string">"\nPlease enter a month (1-12)? "</span>;
+    cin &gt;&gt; Month;
+    <span class="keyword">return</span> Month;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">short</span> Year = <span class="function">ReadYear</span>();
+    <span class="keyword">short</span> Month = <span class="function">ReadMonth</span>();
+    
+    cout &lt;&lt; <span class="string">"\nNumber of Days in Month ["</span> &lt;&lt; Month &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfDaysInAMonth</span>(Month, Year);
+         
+    cout &lt;&lt; <span class="string">"\nNumber of Hours in Month ["</span> &lt;&lt; Month &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfHoursInAMonth</span>(Month, Year);
+         
+    cout &lt;&lt; <span class="string">"\nNumber of Minutes in Month ["</span> &lt;&lt; Month &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfMinutesInAMonth</span>(Month, Year);
+         
+    cout &lt;&lt; <span class="string">"\nNumber of Seconds in Month ["</span> &lt;&lt; Month &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfSecondsInAMonth</span>(Month, Year);
+    
+    system(<span class="string">"pause&gt;0"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 6: Month Calculator Optimized -->
+        <div id="problem6" class="problem-content">
+            <div class="main-content">
+                <!-- Comparison Section -->
+                <div class="card converter-section">
+                    <h2><span class="icon">🚀</span>Optimized Month Calculator - Using Array!</h2>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <h3 style="color: white; margin-bottom: 15px; text-align: center;">✨ From Multiple if-else to Array Lookup! ✨</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; backdrop-filter: blur(10px);">
+                                <h4 style="color: #fbbf24; margin-bottom: 10px;">❌ Before (Multiple if-else)</h4>
+                                <div style="background: #2d3748; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.85em; color: #e2e8f0;">
+if (Month == 2)
+    return IsLeapYear ? 29 : 28;
+
+if (Month == 4 || Month == 6 || 
+    Month == 9 || Month == 11)
+    return 30;
+
+return 31;
+                                </div>
+                                <p style="color: white; margin-top: 10px; font-size: 0.9em;">📏 Multiple conditions</p>
+                            </div>
+                            
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; backdrop-filter: blur(10px);">
+                                <h4 style="color: #10b981; margin-bottom: 10px;">✅ After (Array Lookup)</h4>
+                                <div style="background: #2d3748; padding: 10px; border-radius: 5px; font-family: monospace; font-size: 0.85em; color: #e2e8f0;">
+int arr[12] = 
+  {31,28,31,30,31,30,
+   31,31,30,31,30,31};
+
+return (Month == 2) ? 
+  (IsLeapYear ? 29 : 28) : 
+  arr[Month - 1];
+                                </div>
+                                <p style="color: white; margin-top: 10px; font-size: 0.9em;">🚀 Direct array access!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="yearInputMonthOpt">Enter a Year:</label>
+                        <input type="number" id="yearInputMonthOpt" placeholder="e.g., 2024" min="1" max="9999">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="monthInputOpt">Enter a Month (1-12):</label>
+                        <select id="monthInputOpt" style="width: 100%; padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1.1em;">
+                            <option value="1">1 - January</option>
+                            <option value="2">2 - February</option>
+                            <option value="3">3 - March</option>
+                            <option value="4">4 - April</option>
+                            <option value="5">5 - May</option>
+                            <option value="6">6 - June</option>
+                            <option value="7">7 - July</option>
+                            <option value="8">8 - August</option>
+                            <option value="9">9 - September</option>
+                            <option value="10">10 - October</option>
+                            <option value="11">11 - November</option>
+                            <option value="12">12 - December</option>
+                        </select>
+                    </div>
+
+                    <button class="btn" onclick="calculateMonthOptimized()">Calculate with Optimized Code</button>
+
+                    <div class="result" id="monthResultOpt">
+                        Your result will appear here...
+                    </div>
+
+                    <div class="examples">
+                        <div class="example-btn" onclick="tryMonthOptCalc(2000, 2)">Feb 2000 (Leap)</div>
+                        <div class="example-btn" onclick="tryMonthOptCalc(1900, 2)">Feb 1900 (NOT Leap)</div>
+                        <div class="example-btn" onclick="tryMonthOptCalc(2024, 1)">Jan 2024</div>
+                        <div class="example-btn" onclick="tryMonthOptCalc(2024, 4)">Apr 2024</div>
+                    </div>
+
+                    <div class="step-by-step" id="monthOptSteps">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">🔍 How Array Lookup Works:</h3>
+                        <div id="monthOptStepsContent"></div>
+                    </div>
+                </div>
+
+                <!-- Array Concept -->
+                <div class="card">
+                    <h2><span class="icon">🧠</span>The Array Approach</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Why Use an Array?</h3>
+                        
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <strong>Create Array with Days per Month:</strong>
+                            <div class="code-block" style="margin-top: 8px;">int NumberOfDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};</div>
+                            <div style="margin-top: 10px; padding: 10px; background: #f0f9ff; border-radius: 5px;">
+                                <strong>Index:</strong> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11<br>
+                                <strong>Month:</strong> Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec<br>
+                                <strong>Days:</strong> 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <strong>Direct Access by Index:</strong>
+                            <div class="code-block" style="margin-top: 8px;">return (Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : NumberOfDays[Month - 1];</div>
+                            <div style="margin-top: 10px; padding: 10px; background: #d1fae5; border-radius: 5px;">
+                                <strong>Example:</strong><br>
+                                • Month 1 (January) → arr[0] = 31<br>
+                                • Month 4 (April) → arr[3] = 30<br>
+                                • Month 12 (December) → arr[11] = 31
+                            </div>
+                        </div>
+                        
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <strong>Special Case - February:</strong>
+                            <div style="margin-top: 10px; padding: 10px; background: #fef3c7; border-radius: 5px;">
+                                February (Month 2) still needs special handling for leap years:<br>
+                                <code>(Month == 2) ? (IsLeapYear(Year) ? 29 : 28) : ...</code>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="explanation">
+                        <strong>💡 Key Advantage:</strong> Instead of checking multiple conditions with ||, we directly access the array! This is <strong>O(1)</strong> constant time - much faster!
+                    </div>
+                </div>
+
+                <!-- Comparison -->
+                <div class="card">
+                    <h2><span class="icon">⚖️</span>Problem 5 vs Problem 6</h2>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th style="text-align: center;">Problem 5 (if-else)</th>
+                                <th style="text-align: center;">Problem 6 (Array)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Code Lines</strong></td>
+                                <td style="text-align: center;">~10 lines</td>
+                                <td style="text-align: center; background: #d1fae5;">~5 lines</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Readability</strong></td>
+                                <td style="text-align: center;">Clear logic</td>
+                                <td style="text-align: center; background: #d1fae5;">More concise</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Performance</strong></td>
+                                <td style="text-align: center;">Multiple checks</td>
+                                <td style="text-align: center; background: #d1fae5;">Direct access O(1)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Maintainability</strong></td>
+                                <td style="text-align: center;">Need to modify conditions</td>
+                                <td style="text-align: center; background: #d1fae5;">Just update array</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Memory</strong></td>
+                                <td style="text-align: center;">No extra space</td>
+                                <td style="text-align: center; background: #fef3c7;">12 integers array</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="tips-box">
+                        <h4>🎯 When to Use Each:</h4>
+                        <ul>
+                            <li><strong>Use if-else (Problem 5):</strong> When logic is simple and conditions are few</li>
+                            <li><strong>Use Array (Problem 6):</strong> When you have fixed data that can be looked up directly</li>
+                            <li><strong>Both are correct!</strong> It's about choosing the right tool for the job</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Input Validation -->
+                <div class="card">
+                    <h2><span class="icon">🛡️</span>Input Validation</h2>
+                    
+                    <div class="logic-section">
+                        <h3>Protecting Against Invalid Input:</h3>
+                        
+                        <div class="logic-item">
+                            <strong>Check Month Range:</strong>
+                            <div class="code-block" style="margin-top: 8px;">if (Month < 1 || Month > 12)
+    return 0;  // Invalid month</div>
+                            <div style="margin-top: 8px; font-size: 0.9em;">
+                                <strong>Why?</strong> Prevents accessing array out of bounds!<br>
+                                If Month = 13, arr[12] would be invalid → <span style="color: #ef4444;">Program crash!</span>
+                            </div>
+                        </div>
+
+                        <div class="logic-item">
+                            <strong>Array Indexing:</strong>
+                            <div style="margin-top: 8px; padding: 10px; background: #fee2e2; border-radius: 5px; border-left: 4px solid #ef4444;">
+                                <strong>⚠️ Important:</strong> Arrays in C++ are 0-indexed!<br>
+                                • Month 1 (January) = Index 0<br>
+                                • Month 12 (December) = Index 11<br>
+                                <br>
+                                <strong>So we use:</strong> <code>arr[Month - 1]</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complete Code -->
+                <div class="card">
+                    <h2><span class="icon">💻</span>Optimized C++ Code</h2>
+                    
+                    <div class="code-reference">
+                        <div class="code-reference-header" onclick="toggleCode('code6')">
+                            <span>📝 Click to View/Hide Optimized Code</span>
+                            <span class="toggle-icon">▼</span>
+                        </div>
+                        <div class="code-reference-content" id="code6">
+                            <pre><span class="comment">// Problem #6: Month Calculator (Optimized with Array)</span>
+<span class="keyword">#include</span> &lt;iostream&gt;
+<span class="keyword">using namespace</span> std;
+
+<span class="comment">// Check if leap year</span>
+<span class="keyword">bool</span> <span class="function">IsLeapYear</span>(<span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> (Year % <span class="number">4</span> == <span class="number">0</span> && Year % <span class="number">100</span> != <span class="number">0</span>) || (Year % <span class="number">400</span> == <span class="number">0</span>);
+}
+
+<span class="comment">// ⚡ Optimized Version - Using Array</span>
+<span class="keyword">short</span> <span class="function">NumberOfDaysInAMonth</span>(<span class="keyword">short</span> Month, <span class="keyword">short</span> Year)
+{
+    <span class="comment">// Input validation</span>
+    <span class="keyword">if</span> (Month &lt; <span class="number">1</span> || Month &gt; <span class="number">12</span>)
+        <span class="keyword">return</span> <span class="number">0</span>;
+    
+    <span class="comment">// Array with days for each month (Jan to Dec)</span>
+    <span class="keyword">int</span> NumberOfDays[<span class="number">12</span>] = {<span class="number">31</span>, <span class="number">28</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>};
+    
+    <span class="comment">// Special case for February in leap years</span>
+    <span class="keyword">return</span> (Month == <span class="number">2</span>) ? (<span class="function">IsLeapYear</span>(Year) ? <span class="number">29</span> : <span class="number">28</span>) : NumberOfDays[Month - <span class="number">1</span>];
+}
+
+<span class="comment">// Same as Problem 5 - builds on NumberOfDaysInAMonth</span>
+<span class="keyword">short</span> <span class="function">NumberOfHoursInAMonth</span>(<span class="keyword">short</span> Month, <span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfDaysInAMonth</span>(Month, Year) * <span class="number">24</span>;
+}
+
+<span class="keyword">int</span> <span class="function">NumberOfMinutesInAMonth</span>(<span class="keyword">short</span> Month, <span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfHoursInAMonth</span>(Month, Year) * <span class="number">60</span>;
+}
+
+<span class="keyword">int</span> <span class="function">NumberOfSecondsInAMonth</span>(<span class="keyword">short</span> Month, <span class="keyword">short</span> Year)
+{
+    <span class="keyword">return</span> <span class="function">NumberOfMinutesInAMonth</span>(Month, Year) * <span class="number">60</span>;
+}
+
+<span class="keyword">short</span> <span class="function">ReadYear</span>()
+{
+    <span class="keyword">short</span> Year;
+    cout &lt;&lt; <span class="string">"\nPlease enter a year to check? "</span>;
+    cin &gt;&gt; Year;
+    <span class="keyword">return</span> Year;
+}
+
+<span class="keyword">short</span> <span class="function">ReadMonth</span>()
+{
+    <span class="keyword">short</span> Month;
+    cout &lt;&lt; <span class="string">"\nPlease enter a Month to check? "</span>;
+    cin &gt;&gt; Month;
+    <span class="keyword">return</span> Month;
+}
+
+<span class="keyword">int</span> <span class="function">main</span>()
+{
+    <span class="keyword">short</span> Year = <span class="function">ReadYear</span>();
+    <span class="keyword">short</span> Month = <span class="function">ReadMonth</span>();
+    
+    cout &lt;&lt; <span class="string">"\nNumber of Days in Month ["</span> &lt;&lt; Month &lt;&lt; <span class="string">"] is "</span>
+         &lt;&lt; <span class="function">NumberOfDaysInAMonth</span>(Month, Year);
+    
+    system(<span class="string">"pause&gt;0"</span>);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="comment">/*
+ * 📊 Comparison with Problem 5:
+ * 
+ * Problem 5: Multiple if-else statements
+ * Problem 6: Direct array lookup
+ * 
+ * Benefits of Array Approach:
+ * ✅ Shorter code (one line vs multiple if-else)
+ * ✅ Faster execution (O(1) vs O(n) comparisons)
+ * ✅ Easier to maintain (just update array values)
+ * ✅ More scalable for similar problems
+ * 
+ * Trade-off:
+ * ⚠️ Uses 12 integers of memory (48 bytes)
+ */</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="explanation" style="margin-top: 15px;">
+                        <strong>🎓 Learning Note:</strong> This demonstrates an important programming concept - using <strong>data structures</strong> (arrays) to replace complex logic. It's a common optimization technique!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Code Reference Box
+        function toggleCode(codeId) {
+            const content = document.getElementById(codeId);
+            const header = event.currentTarget;
+            
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        // Tab Switching Function
+        function switchProblem(problemId) {
+            // Hide all problems
+            document.querySelectorAll('.problem-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected problem
+            document.getElementById(problemId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // ============ PROBLEM 1: Number to Text ============
+        function numberToText(number) {
+            const steps = [];
+            
+            function convert(num, level = 0) {
+                const indent = '  '.repeat(level);
+                
+                if (num === 0) {
+                    steps.push(`${indent}Number is 0 → Return empty string ""`);
+                    return "";
+                }
+
+                if (num >= 1 && num <= 19) {
+                    const arr = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+                        "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+                        "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+                    steps.push(`${indent}Number ${num} is 1-19 → Return "${arr[num]}"`);
+                    return arr[num] + " ";
+                }
+
+                if (num >= 20 && num <= 99) {
+                    const arr = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", 
+                        "Seventy", "Eighty", "Ninety"];
+                    steps.push(`${indent}Number ${num} is 20-99 → "${arr[Math.floor(num/10)]}" + NumberToText(${num % 10})`);
+                    return arr[Math.floor(num / 10)] + " " + convert(num % 10, level + 1);
+                }
+
+                if (num >= 100 && num <= 199) {
+                    steps.push(`${indent}Number ${num} is 100-199 → "One Hundred" + NumberToText(${num % 100})`);
+                    return "One Hundred " + convert(num % 100, level + 1);
+                }
+
+                if (num >= 200 && num <= 999) {
+                    steps.push(`${indent}Number ${num} is 200-999 → NumberToText(${Math.floor(num/100)}) + "Hundreds" + NumberToText(${num % 100})`);
+                    return convert(Math.floor(num / 100), level + 1) + "Hundreds " + convert(num % 100, level + 1);
+                }
+
+                if (num >= 1000 && num <= 1999) {
+                    steps.push(`${indent}Number ${num} is 1000-1999 → "One Thousand" + NumberToText(${num % 1000})`);
+                    return "One Thousand " + convert(num % 1000, level + 1);
+                }
+
+                if (num >= 2000 && num <= 999999) {
+                    steps.push(`${indent}Number ${num} is 2000-999999 → NumberToText(${Math.floor(num/1000)}) + "Thousands" + NumberToText(${num % 1000})`);
+                    return convert(Math.floor(num / 1000), level + 1) + "Thousands " + convert(num % 1000, level + 1);
+                }
+
+                if (num >= 1000000 && num <= 1999999) {
+                    steps.push(`${indent}Number ${num} is 1M-1.9M → "One Million" + NumberToText(${num % 1000000})`);
+                    return "One Million " + convert(num % 1000000, level + 1);
+                }
+
+                if (num >= 2000000 && num <= 999999999) {
+                    steps.push(`${indent}Number ${num} is 2M-999M → NumberToText(${Math.floor(num/1000000)}) + "Millions" + NumberToText(${num % 1000000})`);
+                    return convert(Math.floor(num / 1000000), level + 1) + "Millions " + convert(num % 1000000, level + 1);
+                }
+
+                if (num >= 1000000000 && num <= 1999999999) {
+                    steps.push(`${indent}Number ${num} is 1B-1.9B → "One Billion" + NumberToText(${num % 1000000000})`);
+                    return "One Billion " + convert(num % 1000000000, level + 1);
+                }
+
+                steps.push(`${indent}Number ${num} is 2B+ → NumberToText(${Math.floor(num/1000000000)}) + "Billions" + NumberToText(${num % 1000000000})`);
+                return convert(Math.floor(num / 1000000000), level + 1) + "Billions " + convert(num % 1000000000, level + 1);
+            }
+
+            const result = convert(number);
+            return { text: result.trim(), steps: steps };
+        }
+
+        function convertNumber() {
+            const input = document.getElementById('numberInput');
+            const number = parseInt(input.value);
+            const resultDiv = document.getElementById('result');
+            const stepByStepDiv = document.getElementById('stepByStep');
+            const stepsDiv = document.getElementById('steps');
+
+            if (isNaN(number) || number < 0) {
+                resultDiv.innerHTML = '⚠️ Please enter a valid positive number!';
+                resultDiv.style.background = '#fee';
+                stepByStepDiv.classList.remove('active');
+                return;
+            }
+
+            if (number > 2147483647) {
+                resultDiv.innerHTML = '⚠️ Number too large! Maximum is 2,147,483,647';
+                resultDiv.style.background = '#fee';
+                stepByStepDiv.classList.remove('active');
+                return;
+            }
+
+            const result = numberToText(number);
+            
+            resultDiv.innerHTML = `✨ <strong>${result.text || 'Zero'}</strong>`;
+            resultDiv.style.background = 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)';
+
+            // Display steps
+            stepsDiv.innerHTML = '';
+            result.steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'step';
+                stepElement.innerHTML = `<span class="step-number">${index + 1}</span>${step}`;
+                stepsDiv.appendChild(stepElement);
+            });
+
+            stepByStepDiv.classList.add('active');
+        }
+
+        function tryExample(num) {
+            document.getElementById('numberInput').value = num;
+            convertNumber();
+        }
+
+        // Allow Enter key to convert
+        document.getElementById('numberInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                convertNumber();
+            }
+        });
+
+        // ============ PROBLEM 2: Leap Year ============
+        function isLeapYear(year) {
+            const steps = [];
+            let result = false;
+            
+            steps.push(`<strong>Checking year ${year}...</strong>`);
+            
+            // Check if divisible by 400
+            if (year % 400 === 0) {
+                steps.push(`✅ ${year} % 400 = ${year % 400} → Divisible by 400!`);
+                steps.push(`<span class="highlight">Rule 1 applies: LEAP YEAR ✅</span>`);
+                result = true;
+            }
+            // Check if divisible by 100
+            else if (year % 100 === 0) {
+                steps.push(`❌ ${year} % 400 = ${year % 400} → NOT divisible by 400`);
+                steps.push(`✅ ${year} % 100 = ${year % 100} → Divisible by 100!`);
+                steps.push(`<span class="highlight">Rule 2 applies: NOT A LEAP YEAR ❌</span>`);
+                result = false;
+            }
+            // Check if divisible by 4
+            else if (year % 4 === 0) {
+                steps.push(`❌ ${year} % 400 = ${year % 400} → NOT divisible by 400`);
+                steps.push(`❌ ${year} % 100 = ${year % 100} → NOT divisible by 100`);
+                steps.push(`✅ ${year} % 4 = ${year % 4} → Divisible by 4!`);
+                steps.push(`<span class="highlight">Rule 3 applies: LEAP YEAR ✅</span>`);
+                result = true;
+            }
+            // All other years
+            else {
+                steps.push(`❌ ${year} % 400 = ${year % 400} → NOT divisible by 400`);
+                steps.push(`❌ ${year} % 100 = ${year % 100} → NOT divisible by 100`);
+                steps.push(`❌ ${year} % 4 = ${year % 4} → NOT divisible by 4`);
+                steps.push(`<span class="highlight">Rule 4 applies: NOT A LEAP YEAR ❌</span>`);
+                result = false;
+            }
+            
+            return { isLeap: result, steps: steps };
+        }
+
+        function checkLeapYear() {
+            const input = document.getElementById('yearInput');
+            const year = parseInt(input.value);
+            const resultDiv = document.getElementById('leapResult');
+            const stepByStepDiv = document.getElementById('leapSteps');
+            const stepsDiv = document.getElementById('leapStepsContent');
+
+            if (isNaN(year) || year < 1) {
+                resultDiv.innerHTML = '⚠️ Please enter a valid year!';
+                resultDiv.style.background = '#fee';
+                stepByStepDiv.classList.remove('active');
+                return;
+            }
+
+            const result = isLeapYear(year);
+            
+            if (result.isLeap) {
+                resultDiv.innerHTML = `✨ <strong>Yes, Year [${year}] is a LEAP YEAR! 🎉</strong>`;
+                resultDiv.style.background = 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)';
+            } else {
+                resultDiv.innerHTML = `<strong>No, Year [${year}] is NOT a leap year.</strong>`;
+                resultDiv.style.background = 'linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%)';
+            }
+
+            // Display steps
+            stepsDiv.innerHTML = '';
+            result.steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'step';
+                stepElement.innerHTML = `<span class="step-number">${index + 1}</span>${step}`;
+                stepsDiv.appendChild(stepElement);
+            });
+
+            stepByStepDiv.classList.add('active');
+        }
+
+        function tryYearExample(year) {
+            document.getElementById('yearInput').value = year;
+            checkLeapYear();
+        }
+
+        // Allow Enter key to check
+        document.getElementById('yearInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkLeapYear();
+            }
+        });
+
+        // ============ PROBLEM 3: Leap Year Optimized ============
+        function checkLeapYearOptimized() {
+            const input = document.getElementById('yearInputOpt');
+            const year = parseInt(input.value);
+            const resultDiv = document.getElementById('leapResultOpt');
+            const stepByStepDiv = document.getElementById('leapStepsOpt');
+            const stepsDiv = document.getElementById('leapStepsContentOpt');
+
+            if (isNaN(year) || year < 1) {
+                resultDiv.innerHTML = '⚠️ Please enter a valid year!';
+                resultDiv.style.background = '#fee';
+                stepByStepDiv.classList.remove('active');
+                return;
+            }
+
+            // Using the optimized one-line logic
+            const isLeap = (year % 400 === 0) || (year % 100 !== 0 && year % 4 === 0);
+            
+            const steps = [];
+            
+            steps.push(`<strong>⚡ Using Optimized One-Line Logic:</strong>`);
+            steps.push(`<code style="background: #2d3748; color: #e2e8f0; padding: 8px; border-radius: 5px; display: block; margin: 10px 0;">return (Year % 400 == 0) || (Year % 100 != 0 && Year % 4 == 0)</code>`);
+            
+            steps.push(`<strong>Breaking it down for year ${year}:</strong>`);
+            
+            // First condition
+            const cond1 = year % 400 === 0;
+            steps.push(`<div style="padding: 10px; background: ${cond1 ? '#d1fae5' : '#fee2e2'}; border-radius: 5px; margin: 8px 0;">
+                <strong>Condition 1:</strong> Year % 400 == 0<br>
+                ${year} % 400 = ${year % 400}<br>
+                Result: <span class="highlight">${cond1 ? 'TRUE ✅' : 'FALSE ❌'}</span>
+            </div>`);
+            
+            if (cond1) {
+                steps.push(`<div style="padding: 10px; background: #fef3c7; border-radius: 5px; margin: 8px 0;">
+                    <strong>💡 Short-circuit evaluation:</strong> First condition is TRUE, so we don't need to check the second condition!<br>
+                    The <code>||</code> operator returns TRUE immediately.
+                </div>`);
+            } else {
+                // Second condition (only if first is false)
+                const cond2a = year % 100 !== 0;
+                const cond2b = year % 4 === 0;
+                const cond2 = cond2a && cond2b;
+                
+                steps.push(`<div style="padding: 10px; background: ${cond2 ? '#d1fae5' : '#fee2e2'}; border-radius: 5px; margin: 8px 0;">
+                    <strong>Condition 2:</strong> Year % 100 != 0 && Year % 4 == 0<br>
+                    <br>
+                    <strong>Part A:</strong> ${year} % 100 != 0<br>
+                    ${year} % 100 = ${year % 100} → ${cond2a ? 'TRUE ✅' : 'FALSE ❌'}<br>
+                    <br>
+                    <strong>Part B:</strong> ${year} % 4 == 0<br>
+                    ${year} % 4 = ${year % 4} → ${cond2b ? 'TRUE ✅' : 'FALSE ❌'}<br>
+                    <br>
+                    <strong>Combined (A && B):</strong> <span class="highlight">${cond2 ? 'TRUE ✅' : 'FALSE ❌'}</span>
+                </div>`);
+            }
+            
+            steps.push(`<div style="padding: 15px; background: ${isLeap ? '#d1fae5' : '#fef3c7'}; border-radius: 8px; border: 2px solid ${isLeap ? '#10b981' : '#f59e0b'}; margin-top: 15px;">
+                <strong style="font-size: 1.1em;">🎯 Final Result:</strong><br>
+                (${cond1 ? 'TRUE' : 'FALSE'}) || (${!cond1 ? (year % 100 !== 0 && year % 4 === 0 ? 'TRUE' : 'FALSE') : 'not evaluated'}) = <span class="highlight" style="font-size: 1.2em;">${isLeap ? 'TRUE ✅' : 'FALSE ❌'}</span><br>
+                <br>
+                Year [${year}] is ${isLeap ? '<strong>a LEAP YEAR! 🎉</strong>' : '<strong>NOT a leap year</strong>'}
+            </div>`);
+            
+            if (isLeap) {
+                resultDiv.innerHTML = `✨ <strong>Yes, Year [${year}] is a LEAP YEAR! 🎉</strong>`;
+                resultDiv.style.background = 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)';
+            } else {
+                resultDiv.innerHTML = `<strong>No, Year [${year}] is NOT a leap year.</strong>`;
+                resultDiv.style.background = 'linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%)';
+            }
+
+            // Display steps
+            stepsDiv.innerHTML = '';
+            steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'step';
+                stepElement.innerHTML = `<span class="step-number">${index + 1}</span>${step}`;
+                stepsDiv.appendChild(stepElement);
+            });
+
+            stepByStepDiv.classList.add('active');
+        }
+
+        function tryYearExampleOpt(year) {
+            document.getElementById('yearInputOpt').value = year;
+            checkLeapYearOptimized();
+        }
+
+        // Allow Enter key to check optimized
+        document.getElementById('yearInputOpt').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkLeapYearOptimized();
+            }
+        });
+
+        // ============ PROBLEM 4: Year Calculator ============
+        function calculateYear() {
+            const input = document.getElementById('yearInputCalc');
+            const year = parseInt(input.value);
+
+            if (isNaN(year) || year < 1) {
+                alert('⚠️ Please enter a valid year!');
+                return;
+            }
+
+            // Check if leap year
+            const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+            
+            // Calculate all values
+            const days = isLeap ? 366 : 365;
+            const hours = days * 24;
+            const minutes = hours * 60;
+            const seconds = minutes * 60;
+
+            // Update displays
+            document.getElementById('daysDisplay').textContent = days.toLocaleString();
+            document.getElementById('hoursDisplay').textContent = hours.toLocaleString();
+            document.getElementById('minutesDisplay').textContent = minutes.toLocaleString();
+            document.getElementById('secondsDisplay').textContent = seconds.toLocaleString();
+
+            // Build steps
+            const steps = [];
+            
+            steps.push(`<strong>📅 Year ${year} is ${isLeap ? 'a LEAP YEAR ✅' : 'NOT a leap year ❌'}</strong>`);
+            
+            steps.push(`<div style="padding: 12px; background: #f0f9ff; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 1: Check Leap Year</strong><br>
+                <code>(${year} % 4 == 0 && ${year} % 100 != 0) || (${year} % 400 == 0)</code><br>
+                Result: <span class="highlight">${isLeap ? 'TRUE' : 'FALSE'}</span>
+            </div>`);
+            
+            steps.push(`<div style="padding: 12px; background: #fef3c7; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 2: Calculate Days</strong><br>
+                <code>IsLeapYear(${year}) ? 366 : 365</code><br>
+                <strong style="font-size: 1.2em; color: #667eea;">Days = ${days}</strong>
+            </div>`);
+            
+            steps.push(`<div style="padding: 12px; background: #d1fae5; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 3: Calculate Hours</strong><br>
+                <code>NumberOfDaysInAYear(${year}) * 24</code><br>
+                ${days} × 24 = <strong style="font-size: 1.2em; color: #10b981;">${hours.toLocaleString()} hours</strong>
+            </div>`);
+            
+            steps.push(`<div style="padding: 12px; background: #fef3c7; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 4: Calculate Minutes</strong><br>
+                <code>NumberOfHoursInAYear(${year}) * 60</code><br>
+                ${hours.toLocaleString()} × 60 = <strong style="font-size: 1.2em; color: #f59e0b;">${minutes.toLocaleString()} minutes</strong>
+            </div>`);
+            
+            steps.push(`<div style="padding: 12px; background: #fee2e2; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 5: Calculate Seconds</strong><br>
+                <code>NumberOfMinutesInAYear(${year}) * 60</code><br>
+                ${minutes.toLocaleString()} × 60 = <strong style="font-size: 1.2em; color: #ef4444;">${seconds.toLocaleString()} seconds</strong>
+            </div>`);
+            
+            steps.push(`<div style="padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; margin-top: 15px; text-align: center;">
+                <strong style="font-size: 1.3em;">🎉 Summary for Year ${year}</strong><br><br>
+                📅 <strong>${days}</strong> days<br>
+                ⏰ <strong>${hours.toLocaleString()}</strong> hours<br>
+                ⏱️ <strong>${minutes.toLocaleString()}</strong> minutes<br>
+                ⚡ <strong>${seconds.toLocaleString()}</strong> seconds
+            </div>`);
+
+            // Display steps
+            const stepsDiv = document.getElementById('calcStepsContent');
+            stepsDiv.innerHTML = '';
+            steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'step';
+                stepElement.innerHTML = `<span class="step-number">${index + 1}</span>${step}`;
+                stepsDiv.appendChild(stepElement);
+            });
+
+            document.getElementById('calcSteps').classList.add('active');
+        }
+
+        function tryYearCalc(year) {
+            document.getElementById('yearInputCalc').value = year;
+            calculateYear();
+        }
+
+        // Allow Enter key for year calculator
+        document.getElementById('yearInputCalc').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculateYear();
+            }
+        });
+
+        // ============ PROBLEM 5: Month Calculator ============
+        function getMonthName(month) {
+            const months = ['', 'January', 'February', 'March', 'April', 'May', 'June',
+                          'July', 'August', 'September', 'October', 'November', 'December'];
+            return months[month];
+        }
+
+        function numberOfDaysInAMonth(month, year) {
+            // February - depends on leap year
+            if (month === 2) {
+                const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+                return isLeap ? 29 : 28;
+            }
+            
+            // April, June, September, November have 30 days
+            if (month === 4 || month === 6 || month === 9 || month === 11) {
+                return 30;
+            }
+            
+            // All other months have 31 days
+            return 31;
+        }
+
+        function calculateMonth() {
+            const yearInput = document.getElementById('yearInputMonth');
+            const monthInput = document.getElementById('monthInput');
+            const year = parseInt(yearInput.value);
+            const month = parseInt(monthInput.value);
+
+            if (isNaN(year) || year < 1) {
+                alert('⚠️ Please enter a valid year!');
+                return;
+            }
+
+            // Check if leap year
+            const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+            
+            // Calculate all values
+            const days = numberOfDaysInAMonth(month, year);
+            const hours = days * 24;
+            const minutes = hours * 60;
+            const seconds = minutes * 60;
+
+            const monthName = getMonthName(month);
+
+            // Update displays
+            document.getElementById('monthDaysDisplay').textContent = days;
+            document.getElementById('monthHoursDisplay').textContent = hours.toLocaleString();
+            document.getElementById('monthMinutesDisplay').textContent = minutes.toLocaleString();
+            document.getElementById('monthSecondsDisplay').textContent = seconds.toLocaleString();
+
+            // Build steps
+            const steps = [];
+            
+            steps.push(`<strong>📅 Calculating for ${monthName} ${year}</strong>`);
+            
+            if (month === 2) {
+                steps.push(`<div style="padding: 12px; background: #f0f9ff; border-radius: 8px; margin: 10px 0;">
+                    <strong>Step 1: February - Check Leap Year</strong><br>
+                    Year ${year} is ${isLeap ? '<span class="highlight">a LEAP YEAR ✅</span>' : '<span style="color: #ef4444;">NOT a leap year ❌</span>'}<br>
+                    <code>IsLeapYear(${year}) ? 29 : 28</code><br>
+                    <strong style="font-size: 1.2em; color: #667eea;">February has ${days} days</strong>
+                </div>`);
+            } else if (month === 4 || month === 6 || month === 9 || month === 11) {
+                steps.push(`<div style="padding: 12px; background: #fef3c7; border-radius: 8px; margin: 10px 0;">
+                    <strong>Step 1: ${monthName} - 30-Day Month</strong><br>
+                    ${monthName} is one of the 4 months with 30 days<br>
+                    (April, June, September, November)<br>
+                    <strong style="font-size: 1.2em; color: #667eea;">${monthName} has 30 days</strong>
+                </div>`);
+            } else {
+                steps.push(`<div style="padding: 12px; background: #d1fae5; border-radius: 8px; margin: 10px 0;">
+                    <strong>Step 1: ${monthName} - 31-Day Month</strong><br>
+                    ${monthName} is one of the 7 months with 31 days<br>
+                    (January, March, May, July, August, October, December)<br>
+                    <strong style="font-size: 1.2em; color: #10b981;">${monthName} has 31 days</strong>
+                </div>`);
+            }
+            
+            steps.push(`<div style="padding: 12px; background: #d1fae5; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 2: Calculate Hours</strong><br>
+                <code>NumberOfDaysInAMonth(${month}, ${year}) * 24</code><br>
+                ${days} × 24 = <strong style="font-size: 1.2em; color: #10b981;">${hours.toLocaleString()} hours</strong>
+            </div>`);
+            
+            steps.push(`<div style="padding: 12px; background: #fef3c7; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 3: Calculate Minutes</strong><br>
+                <code>NumberOfHoursInAMonth(${month}, ${year}) * 60</code><br>
+                ${hours.toLocaleString()} × 60 = <strong style="font-size: 1.2em; color: #f59e0b;">${minutes.toLocaleString()} minutes</strong>
+            </div>`);
+            
+            steps.push(`<div style="padding: 12px; background: #fee2e2; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 4: Calculate Seconds</strong><br>
+                <code>NumberOfMinutesInAMonth(${month}, ${year}) * 60</code><br>
+                ${minutes.toLocaleString()} × 60 = <strong style="font-size: 1.2em; color: #ef4444;">${seconds.toLocaleString()} seconds</strong>
+            </div>`);
+            
+            steps.push(`<div style="padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; margin-top: 15px; text-align: center;">
+                <strong style="font-size: 1.3em;">🎉 Summary for ${monthName} ${year}</strong><br><br>
+                📅 <strong>${days}</strong> days<br>
+                ⏰ <strong>${hours.toLocaleString()}</strong> hours<br>
+                ⏱️ <strong>${minutes.toLocaleString()}</strong> minutes<br>
+                ⚡ <strong>${seconds.toLocaleString()}</strong> seconds
+            </div>`);
+
+            // Display steps
+            const stepsDiv = document.getElementById('monthCalcStepsContent');
+            stepsDiv.innerHTML = '';
+            steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'step';
+                stepElement.innerHTML = `<span class="step-number">${index + 1}</span>${step}`;
+                stepsDiv.appendChild(stepElement);
+            });
+
+            document.getElementById('monthCalcSteps').classList.add('active');
+        }
+
+        function tryMonthCalc(year, month) {
+            document.getElementById('yearInputMonth').value = year;
+            document.getElementById('monthInput').value = month;
+            calculateMonth();
+        }
+
+        // Allow Enter key for month calculator
+        document.getElementById('yearInputMonth').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculateMonth();
+            }
+        });
+
+        // ============ PROBLEM 6: Month Calculator Optimized ============
+        function numberOfDaysInAMonthOptimized(month, year) {
+            // Input validation
+            if (month < 1 || month > 12) {
+                return 0;
+            }
+            
+            // Array with days for each month
+            const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            
+            // Special case for February in leap years
+            if (month === 2) {
+                const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+                return isLeap ? 29 : 28;
+            }
+            
+            // Direct array access (Month - 1 because arrays are 0-indexed)
+            return daysInMonth[month - 1];
+        }
+
+        function calculateMonthOptimized() {
+            const yearInput = document.getElementById('yearInputMonthOpt');
+            const monthInput = document.getElementById('monthInputOpt');
+            const year = parseInt(yearInput.value);
+            const month = parseInt(monthInput.value);
+
+            if (isNaN(year) || year < 1) {
+                alert('⚠️ Please enter a valid year!');
+                return;
+            }
+
+            // Check if leap year
+            const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+            
+            // Calculate using optimized array method
+            const days = numberOfDaysInAMonthOptimized(month, year);
+            const hours = days * 24;
+            const minutes = hours * 60;
+            const seconds = minutes * 60;
+
+            const monthName = getMonthName(month);
+
+            // Build result display
+            const resultDiv = document.getElementById('monthResultOpt');
+            resultDiv.innerHTML = `✨ <strong>${monthName} ${year} has ${days} days!</strong>`;
+            resultDiv.style.background = 'linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%)';
+
+            // Build steps
+            const steps = [];
+            
+            steps.push(`<strong>🚀 Using Optimized Array Method for ${monthName} ${year}</strong>`);
+            
+            steps.push(`<div style="padding: 12px; background: #f0f9ff; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 1: Create Array</strong><br>
+                <code style="background: #2d3748; color: #e2e8f0; padding: 8px; border-radius: 5px; display: block; margin: 10px 0;">
+int daysInMonth[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+                </code>
+                <div style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; font-size: 0.9em;">
+                    <strong>Index:</strong> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11<br>
+                    <strong>Month:</strong> Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec<br>
+                    <strong>Days:</strong> 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+                </div>
+            </div>`);
+            
+            if (month === 2) {
+                steps.push(`<div style="padding: 12px; background: #fef3c7; border-radius: 8px; margin: 10px 0;">
+                    <strong>Step 2: February Special Case</strong><br>
+                    <code>Month == 2 → Check Leap Year</code><br>
+                    Year ${year} is ${isLeap ? '<span class="highlight">a LEAP YEAR ✅</span>' : '<span style="color: #ef4444;">NOT a leap year ❌</span>'}<br>
+                    <code>(Month == 2) ? (IsLeapYear ? 29 : 28) : daysInMonth[Month - 1]</code><br>
+                    <strong style="font-size: 1.2em; color: #f59e0b;">Result: ${days} days</strong>
+                </div>`);
+            } else {
+                const arrayIndex = month - 1;
+                steps.push(`<div style="padding: 12px; background: #d1fae5; border-radius: 8px; margin: 10px 0;">
+                    <strong>Step 2: Direct Array Access</strong><br>
+                    Month ${month} (${monthName}) → Array Index [${arrayIndex}]<br>
+                    <code>daysInMonth[${month} - 1] = daysInMonth[${arrayIndex}]</code><br>
+                    <strong style="font-size: 1.2em; color: #10b981;">Result: ${days} days</strong>
+                </div>`);
+            }
+            
+            steps.push(`<div style="padding: 12px; background: #e0e7ff; border-radius: 8px; margin: 10px 0;">
+                <strong>Step 3: Calculate Other Units</strong><br>
+                <strong>Hours:</strong> ${days} × 24 = <span class="highlight">${hours.toLocaleString()}</span><br>
+                <strong>Minutes:</strong> ${hours.toLocaleString()} × 60 = <span class="highlight">${minutes.toLocaleString()}</span><br>
+                <strong>Seconds:</strong> ${minutes.toLocaleString()} × 60 = <span class="highlight">${seconds.toLocaleString()}</span>
+            </div>`);
+            
+            steps.push(`<div style="padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; margin-top: 15px;">
+                <h3 style="text-align: center; margin-bottom: 15px;">⚡ Performance Comparison</h3>
+                <table style="width: 100%; color: white; font-size: 0.9em;">
+                    <tr>
+                        <td><strong>Problem 5 (if-else):</strong></td>
+                        <td style="text-align: right;">Multiple comparisons ⏱️</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Problem 6 (Array):</strong></td>
+                        <td style="text-align: right; color: #10b981;">Direct access! 🚀</td>
+                    </tr>
+                </table>
+                <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; text-align: center;">
+                    <strong>Array lookup is O(1) - Constant time!</strong>
+                </div>
+            </div>`);
+
+            // Display steps
+            const stepsDiv = document.getElementById('monthOptStepsContent');
+            stepsDiv.innerHTML = '';
+            steps.forEach((step, index) => {
+                const stepElement = document.createElement('div');
+                stepElement.className = 'step';
+                stepElement.innerHTML = `<span class="step-number">${index + 1}</span>${step}`;
+                stepsDiv.appendChild(stepElement);
+            });
+
+            document.getElementById('monthOptSteps').classList.add('active');
+        }
+
+        function tryMonthOptCalc(year, month) {
+            document.getElementById('yearInputMonthOpt').value = year;
+            document.getElementById('monthInputOpt').value = month;
+            calculateMonthOptimized();
+        }
+
+        // Allow Enter key for optimized month calculator
+        document.getElementById('yearInputMonthOpt').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                calculateMonthOptimized();
+            }
+        });
+    </script>
+</body>
+</html>
